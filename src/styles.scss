@@ -1,0 +1,13 @@
+@use './product_list_style/index';
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px;
+}
