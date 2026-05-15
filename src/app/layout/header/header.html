@@ -1,7 +1,8 @@
 <header class="main-header">
   <h1 class="main-header__title">Produkte</h1>
 
-  <a class="btn" [class.btn--primary]="path() === ''" [class.btn--secondary]="path() === 'detail'">
+  <a [routerLink]="['/', btnPath() ]" class="btn" [class.btn--primary]="btnPath() === ''"
+    [class.btn--secondary]="btnPath() !== ''">
     <span>{{ btnText() }}</span>
     @if (path() == "") {
     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
