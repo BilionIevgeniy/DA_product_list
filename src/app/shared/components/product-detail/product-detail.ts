@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UpperCasePipe } from '@angular/common';
+import { FileStoreService, MyFile } from '../../../core/services/file-store';
 
 @Component({
   selector: 'app-product-detail',
@@ -10,20 +11,24 @@ import { UpperCasePipe } from '@angular/common';
 })
 export class ProductDetail {
   private activatedRoute = inject(ActivatedRoute);
+  private fileStore = inject(FileStoreService);
 
   detail = signal({
-    name: 'Gaming Maus',
-    description: 'Eine ergonomische Gaming-Maus...',
-    specs: 'dpi: 6400...',
-    stock: 120,
-    price: 2500000,
+    name: '',
+    description: '',
+    specs: '',
+    stock: 0,
+    price: 0,
   });
 
   ngOnInit() {
     const name = this.activatedRoute.snapshot.params['name'];
-    this.detail.update((current) => ({ ...current, name }));
+    const file = this.fileStore.getFileById(name);
+    if (file()) {
+      this.detail.set(file()!);
+    }
   }
   deleteDetail() {
-    this.detail.update((current) => ({ ...current, name: '' }));
+    this.detail.set({ ...this.detail(), name: '' });
   }
 }
